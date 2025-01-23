@@ -7,16 +7,17 @@
 {
   imports =
     [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
+      /etc/nixos/hardware-configuration.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+    boot.loader.systemd-boot.enable = true;
+    boot.loader.efi.canTouchEfiVariables = true;
 
   # virtualization 
-  virtualisation.vmware.guest.enable = true;
-
+    virtualisation.vmware.guest.enable = true;
+  #Services
+    services.gnome.gnome-keyring.enable = true;
   # networking.hostName = "nixos"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -82,7 +83,8 @@
     environment.systemPackages = with pkgs; [
         vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
         wget
-	git
+	gitFull
+	gnome-keyring
     ];
 
     programs.git = {
@@ -90,6 +92,7 @@
 	config = {
  	user.name = "Jan Novak";
  	user.email = "janovak171@gmail.com";
+	credential.helper = "libsecret";
 	};
  };
 
